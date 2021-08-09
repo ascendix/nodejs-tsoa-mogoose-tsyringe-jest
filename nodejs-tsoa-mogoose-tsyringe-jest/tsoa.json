@@ -1,0 +1,26 @@
+{
+  "entryFile": "src/app.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/**/*Controller.ts"],
+  "spec": {
+    "outputDirectory": "build",
+    "specVersion": 3,
+    "securityDefinitions": {
+      "jwt": {
+        "type": "apiKey",
+        "name": "authorization",
+        "in": "header"
+      }
+    }
+  },
+  "swagger": {
+    "docExpansion": "none"
+  },
+  "routes": {
+    "iocModule": "src/ioc/index.ts",
+    "routesDir": "build",
+    "middleware": "express",
+    "authenticationModule": "src/api/middlewares/auth.ts"
+  },
+  "ignore": ["**/node_modules/**"]
+}
