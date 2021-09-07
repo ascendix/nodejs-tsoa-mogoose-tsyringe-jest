@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Record } from 'src/models/Record';
 import { Dictionary } from 'tsyringe/dist/typings/types';
 import IRecordsRepository from '../../../interfaces/repositories/IRecordRepository';
+import { WriteOperationResult } from 'src/models/Operations';
 
 const IN_MEMORY_STORAGE: Dictionary<Record> = {};
 
@@ -29,12 +30,13 @@ export class TestRecordsRepository implements IRecordsRepository {
   update(
     id: string,
     record: Record
-  ): Promise<{ ok: number; n: number; nModified: number }> {
+  ): Promise<WriteOperationResult> {
     IN_MEMORY_STORAGE[id] = record;
     return Promise.resolve({
-      n: 1,
-      nModified: 1,
-      ok: 1,
+      acknowledged: true,
+      matchedCount: 1,
+      modifiedCount: 1,
+      upsertedCount: 1
     });
   }
 }

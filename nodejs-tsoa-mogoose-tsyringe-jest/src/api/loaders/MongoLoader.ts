@@ -8,11 +8,9 @@ export class MongoLoader implements IMongoLoader {
   private count = 0;
 
   private mongooseOptions: ConnectOptions = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 10000,
-    useFindAndModify: false,
-    useCreateIndex: true,
+    autoIndex: true,
+    autoCreate: true,
     tlsInsecure: true,
   };
 

@@ -3,6 +3,7 @@ import IRecordsRepository from 'src/interfaces/repositories/IRecordRepository';
 import { MongoRecord, mongoRecordSchema } from './RecordSchema';
 import { Record } from 'src/models/Record';
 import { DebugNamespaces, log } from '../../logger';
+import { WriteOperationResult } from 'src/models/Operations';
 
 export class RecordsRepository implements IRecordsRepository {
   constructor() {
@@ -46,13 +47,9 @@ export class RecordsRepository implements IRecordsRepository {
   update(
     id: string,
     record: Record
-  ): Promise<{
-    ok: number;
-    n: number;
-    nModified: number;
-  }> {
+  ): Promise<WriteOperationResult> {
     return this.model
-      .updateOne({ _id: id }, record, { omitUndefined: true })
+      .updateOne({ _id: id }, {$set: record })
       .exec();
   }
 }

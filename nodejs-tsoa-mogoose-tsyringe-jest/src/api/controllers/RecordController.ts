@@ -64,8 +64,9 @@ export class RecordController extends Controller {
       recordId,
       record
     );
-    if (result.n > 0) {
-      this.setStatus(result.nModified ? 202 : 204);
+    const hasChanges = result.modifiedCount + result.upsertedCount > 0;
+    if (hasChanges) {
+      this.setStatus(result.modifiedCount ? 202 : 204);
     }
   }
 }

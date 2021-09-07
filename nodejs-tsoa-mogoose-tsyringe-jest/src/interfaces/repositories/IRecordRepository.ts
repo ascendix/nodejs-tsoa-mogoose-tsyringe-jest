@@ -1,3 +1,4 @@
+import { WriteOperationResult } from 'src/models/Operations';
 import { Record } from 'src/models/Record';
 
 export default interface IRecordsRepository {
@@ -8,9 +9,5 @@ export default interface IRecordsRepository {
   update(
     id: string,
     record: Record
-  ): Promise<{
-    ok: number;
-    n: number;
-    nModified: number;
-  }>;
+  ): Promise<WriteOperationResult>;
 }

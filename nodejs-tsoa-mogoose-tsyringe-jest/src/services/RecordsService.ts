@@ -11,6 +11,7 @@ import { Roles } from '../models/Roles';
 import { inject, injectable } from 'tsyringe';
 import { Record } from 'src/models/Record';
 import { ServerError } from '../api/errors';
+import { WriteOperationResult } from 'src/models/Operations';
 
 @injectable()
 export class RecordsService implements IRecordsService {
@@ -49,11 +50,7 @@ export class RecordsService implements IRecordsService {
     userSession: UserSession,
     recordId: string,
     record: RecordCreateRequest
-  ): Promise<{
-    ok: number;
-    n: number;
-    nModified: number;
-  }> {
+  ): Promise<WriteOperationResult> {
     const existing = await this.repository.getById(recordId);
     if (!existing) {
       throw new ServerError('Record not found', 404);
