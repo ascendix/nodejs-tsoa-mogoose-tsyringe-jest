@@ -9,7 +9,7 @@ import IExpressLoader from '../../interfaces/loaders/IExpressLoader';
 import { RegisterRoutes } from '../../../build/routes';
 import { errorHandlingMiddleware } from '../middlewares/error';
 
-export class ExpressLoader implements IExpressLoader {
+export default class ExpressLoader implements IExpressLoader {
   LoadApp(app: Application) {
     app.use(
       express.json({
@@ -32,11 +32,9 @@ export class ExpressLoader implements IExpressLoader {
     app.use(
       `${Config.virtualPath}/swagger`,
       swaggerUi.serve,
-      async (_req: ExRequest, res: ExResponse) => {
-        return res.send(
-          swaggerUi.generateHTML(await import('../../../build/swagger.json')),
-        );
-      },
+      async (_req: ExRequest, res: ExResponse) => res.send(
+        swaggerUi.generateHTML(await import('../../../build/swagger.json')),
+      ),
     );
   }
 }

@@ -1,5 +1,12 @@
 import { inject, injectable } from 'tsyringe';
-import { Controller, Get, Request, Route, Security, Tags } from 'tsoa';
+import {
+  Controller,
+  Get,
+  Request,
+  Route,
+  Security,
+  Tags,
+} from 'tsoa';
 import { ISessionService } from 'src/interfaces/services/ISessionService';
 import { AuthRequest, UserSession } from '../dto/session';
 
@@ -8,7 +15,7 @@ import { AuthRequest, UserSession } from '../dto/session';
 @Tags('SessionController')
 export class SessionController extends Controller {
   constructor(
-    @inject('ISessionService') private sessionService: ISessionService
+    @inject('ISessionService') private sessionService: ISessionService,
   ) {
     super();
   }

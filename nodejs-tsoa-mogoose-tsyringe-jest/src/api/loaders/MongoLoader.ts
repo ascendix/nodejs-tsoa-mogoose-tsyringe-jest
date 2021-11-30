@@ -1,10 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose, { ConnectOptions } from 'mongoose';
 import { IMongoLoader } from 'src/interfaces/loaders/IMongoLoader';
 import { DebugNamespaces, log } from '../../logger';
 import { Config } from '../../config';
-import { ConnectOptions } from 'mongoose';
 
-export class MongoLoader implements IMongoLoader {
+export default class MongoLoader implements IMongoLoader {
   private count = 0;
 
   private mongooseOptions: ConnectOptions = {
@@ -15,7 +14,7 @@ export class MongoLoader implements IMongoLoader {
   };
 
   private dbConnectionString = Config.mongoDbConnectionString;
-  
+
   ConnectWithRetry(): void {
     log(DebugNamespaces.DB, 'Attempting MongoDB connection (will retry if needed)');
     mongoose
@@ -32,7 +31,9 @@ export class MongoLoader implements IMongoLoader {
           err,
         );
         this.count += 1;
-        setTimeout(this.ConnectWithRetry, retrySeconds * 1000);
+        setTimeout(() => {
+          this.ConnectWithRetry();
+        }, retrySeconds * 1000);
       });
   }
 }

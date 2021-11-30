@@ -1,3 +1,6 @@
+import { inject, injectable } from 'tsyringe';
+import { Record } from 'src/models/Record';
+import { WriteOperationResult } from 'src/models/Operations';
 import {
   MapRecordResponse,
   RecordCreateRequest,
@@ -8,23 +11,20 @@ import IRecordsRepository from '../interfaces/repositories/IRecordRepository';
 import { IRecordsService } from '../interfaces/services/IRecordsService';
 import { DebugNamespaces, log } from '../logger';
 import { Roles } from '../models/Roles';
-import { inject, injectable } from 'tsyringe';
-import { Record } from 'src/models/Record';
 import { ServerError } from '../api/errors';
-import { WriteOperationResult } from 'src/models/Operations';
 
 @injectable()
-export class RecordsService implements IRecordsService {
+export default class RecordsService implements IRecordsService {
   constructor(
     @inject('IRecordsRepository')
-    private repository: IRecordsRepository
+    private repository: IRecordsRepository,
   ) {
     log(DebugNamespaces.APP, 'Created Records Service instance');
   }
 
   async create(
     userSession: UserSession,
-    body: RecordCreateRequest
+    body: RecordCreateRequest,
   ): Promise<RecordResponse> {
     const record = await this.repository.create({
       ...body,
@@ -49,7 +49,7 @@ export class RecordsService implements IRecordsService {
   async update(
     userSession: UserSession,
     recordId: string,
-    record: RecordCreateRequest
+    record: RecordCreateRequest,
   ): Promise<WriteOperationResult> {
     const existing = await this.repository.getById(recordId);
     if (!existing) {

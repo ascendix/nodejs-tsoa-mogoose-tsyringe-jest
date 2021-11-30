@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export interface Config {
+export interface IConfig {
   jwtSecret: string;
   nodeEnv: string;
   port: number;
@@ -10,7 +10,7 @@ export interface Config {
   mongoDbConnectionString: string;
 }
 
-export const Config: Config = {
+export const Config: IConfig = {
   port: Number.parseInt(process.env.PORT || '3000', 10),
   jwtSecret: process.env.JWT_SECRET || '',
   nodeEnv: process.env.NODE_ENV || 'development',

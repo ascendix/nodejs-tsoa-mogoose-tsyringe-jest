@@ -1,11 +1,15 @@
-import { model, QueryOptions, FilterQuery } from 'mongoose';
+import {
+  model,
+  QueryOptions,
+  FilterQuery,
+} from 'mongoose';
 import IRecordsRepository from 'src/interfaces/repositories/IRecordRepository';
-import { MongoRecord, mongoRecordSchema } from './RecordSchema';
 import { Record } from 'src/models/Record';
-import { DebugNamespaces, log } from '../../logger';
 import { WriteOperationResult } from 'src/models/Operations';
+import { MongoRecord, mongoRecordSchema } from './RecordSchema';
+import { DebugNamespaces, log } from '../../logger';
 
-export class RecordsRepository implements IRecordsRepository {
+export default class RecordsRepository implements IRecordsRepository {
   constructor() {
     log(DebugNamespaces.APP, 'Created RecordsRepository instance');
   }
@@ -21,6 +25,7 @@ export class RecordsRepository implements IRecordsRepository {
   create(record: Record): Promise<Record> {
     return this.model.create(record);
   }
+
   list(): Promise<Record[]> {
     const options: QueryOptions = {
       skip: 0,
@@ -38,18 +43,16 @@ export class RecordsRepository implements IRecordsRepository {
       sort: { createdAt: -1 },
     };
 
-    const query: FilterQuery<Record> = {
-      createdBy: userId,
-    };
+    const query: FilterQuery<Record> = { createdBy: userId };
     return this.model.find(query, null, options).exec();
   }
 
   update(
     id: string,
-    record: Record
+    record: Record,
   ): Promise<WriteOperationResult> {
     return this.model
-      .updateOne({ _id: id }, {$set: record })
+      .updateOne({ _id: id }, { $set: record })
       .exec();
   }
 }

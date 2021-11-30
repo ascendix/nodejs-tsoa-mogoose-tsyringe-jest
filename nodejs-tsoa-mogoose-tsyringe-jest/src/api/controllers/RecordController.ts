@@ -20,7 +20,7 @@ import { RecordCreateRequest, RecordResponse } from '../dto/record';
 @Tags('RecordController')
 export class RecordController extends Controller {
   constructor(
-    @inject('IRecordsService') private recordsService: IRecordsService
+    @inject('IRecordsService') private recordsService: IRecordsService,
   ) {
     super();
   }
@@ -32,7 +32,7 @@ export class RecordController extends Controller {
   @Security('jwt')
   post(
     @Request() request: AuthRequest,
-    @Body() body: RecordCreateRequest
+      @Body() body: RecordCreateRequest,
   ): Promise<RecordResponse> {
     return this.recordsService.create(request.user, body);
   }
@@ -56,13 +56,13 @@ export class RecordController extends Controller {
   @Security('jwt', ['ADMIN'])
   async updateRecord(
     @Request() request: AuthRequest,
-    recordId: string,
-    @Body() record: RecordCreateRequest
+      recordId: string,
+      @Body() record: RecordCreateRequest,
   ): Promise<void> {
     const result = await this.recordsService.update(
       request.user,
       recordId,
-      record
+      record,
     );
     const hasChanges = result.modifiedCount + result.upsertedCount > 0;
     if (hasChanges) {

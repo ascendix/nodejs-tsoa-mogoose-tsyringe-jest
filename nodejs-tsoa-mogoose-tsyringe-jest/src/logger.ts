@@ -1,5 +1,5 @@
-import { Config } from './config';
 import debug from 'debug';
+import { Config } from './config';
 
 export enum DebugNamespaces {
   APP = 'app',

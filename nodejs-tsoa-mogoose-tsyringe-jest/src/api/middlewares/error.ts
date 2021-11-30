@@ -1,20 +1,24 @@
-import { NextFunction, Request, Response } from 'express';
+import {
+  NextFunction,
+  Request,
+  Response,
+} from 'express';
 import mongoose from 'mongoose';
-import { DebugNamespaces, log } from '../../logger';
 import { ValidateError } from 'tsoa';
+import { DebugNamespaces, log } from '../../logger';
 import { ServerError } from '../errors';
 
 export const errorHandlingMiddleware = (
   err: ServerError,
   req: Request,
   res: Response,
-  _next: NextFunction
+  _next: NextFunction,
 ): void => {
   if (err instanceof ValidateError) {
     log(
       DebugNamespaces.WARN,
       `Caught Validation Error for ${req.path}:`,
-      err.fields
+      err.fields,
     );
     res.status(400).json({
       message: 'Validation Failed',
@@ -26,7 +30,7 @@ export const errorHandlingMiddleware = (
     log(
       DebugNamespaces.WARN,
       `Caught Validation Error for ${req.path}:`,
-      err.errors
+      err.errors,
     );
     res.status(400).json({
       message: 'Validation Failed',

@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application } from 'express';
 import IExpressLoader from './interfaces/loaders/IExpressLoader';
 import { IMongoLoader } from './interfaces/loaders/IMongoLoader';
 import { container } from './ioc';

@@ -1,8 +1,8 @@
 import supertest from 'supertest';
+import { RecordCreateRequest, RecordResponse } from 'src/api/dto/record';
 import auth from '../../mocks/auth';
 import { Config } from '../../../config';
 import mocks from '../../mocks';
-import { RecordCreateRequest, RecordResponse } from 'src/api/dto/record';
 
 describe('Record API tests', (): void => {
   let request: supertest.SuperTest<supertest.Test>;

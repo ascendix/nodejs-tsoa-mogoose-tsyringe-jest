@@ -5,7 +5,7 @@ import createApp from '../../app';
 import { container } from '../../ioc';
 import { TestMongoLoader } from './TestMongoLoader';
 import { DebugNamespaces, log } from '../../logger';
-import { TestRecordsRepository } from './repositories/TestRecordsRepository';
+import TestRecordsRepository from './repositories/TestRecordsRepository';
 
 let server: http.Server;
 let request: supertest.SuperTest<supertest.Test>;
@@ -17,7 +17,7 @@ function initMocks(): void {
 
 const startTestServer = (
   reset: boolean,
-  done: jest.DoneCallback
+  done: jest.DoneCallback,
 ): supertest.SuperTest<supertest.Test> => {
   if (reset || !server) {
     log(DebugNamespaces.DEBUG, 'Test server started');

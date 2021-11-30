@@ -27,5 +27,5 @@ export const mongoRecordSchema = new Schema(
     },
     serviceField: String,
   },
-  { timestamps: { currentTime: () => Math.round(Date.now()) } }
+  { timestamps: { currentTime: () => Math.round(Date.now()) } },
 );
